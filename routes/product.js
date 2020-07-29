@@ -7,14 +7,10 @@ const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-	cloud_name: "dhc7nkut3",
-	api_key: "863235225638562",
-	api_secret: "ddFyJz-BqNV1qGWlcLEFPPXJPy0",
+	cloud_name: process.env.CLOUD_NAME,
+	api_key: process.env.API_KEY,
+	api_secret: process.env.API_SECRET,
 });
-
-// cloud_name: process.env.CLOUD_NAME,
-// api_key: process.env.API_KEY,
-// api_secret: process.env.API_SECRET,
 
 // defining how files to be stored
 const storage = multer.diskStorage({
