@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 // @route  GET api/user/test
 // @desc   This is test route
 // @access Public
@@ -36,7 +37,10 @@ router.post(
 		try {
 			let user = await User.findOne({ email });
 			if (user) {
-				return res.status(400).json({ errors: "Email already exists" });
+				// return res.status(400).json({ errors: "Email already exists" });
+				return res
+					.status(422)
+					.json({ errors: [{ msg: "Email already exists" }] });
 			}
 			user = new User({
 				name,
@@ -64,7 +68,7 @@ router.post(
 				}
 			);
 		} catch (err) {
-			res.status(500).json({ errors: "Server Error" });
+			res.status(500).json({ errors: [{ msg: "Server Error" }] });
 		}
 	}
 );
@@ -88,11 +92,13 @@ router.post(
 		try {
 			let user = await User.findOne({ email });
 			if (!user) {
-				return res.status(401).json({ errors: "Invalid credentials" });
+				return res
+					.status(422)
+					.json({ errors: [{ msg: "Invalid credentials" }] });
 			}
 			const isMatch = await bcrypt.compare(password, user.password);
 			if (!isMatch) {
-				return res.status(400).json({ errors: "Wrong password" });
+				return res.status(422).json({ errors: [{ msg: "Wrong password" }] });
 			}
 			const payload = {
 				user: {
@@ -110,7 +116,7 @@ router.post(
 				}
 			);
 		} catch (err) {
-			res.status(500).json({ errors: "Server error , sorry :(" });
+			res.status(500).json({ errors: [{ msg: "Server error , sorry :(" }] });
 		}
 	}
 );
@@ -140,7 +146,7 @@ router.get("/:userid", async (req, res) => {
 		if (!user) res.status(404).json({ error: "No user found" });
 		res.json({ user });
 	} catch (err) {
-		res.status(500).json({ error: "Internal server error" });
+		res.status(500).json({ errors: [{ msg: "Server error , sorry :(" }] });
 	}
 });
 

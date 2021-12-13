@@ -21,6 +21,7 @@ router.post("/add", auth, async (req, res) => {
 				}
 			);
 			return res.json({ msg: "Product addded to cart" });
+			// return res.status(200).json({ errors: [{ msg: "Product addded to cart" }] });
 		} else {
 			const newCart = new Cart({
 				user: userId,

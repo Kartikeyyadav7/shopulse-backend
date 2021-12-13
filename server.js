@@ -7,7 +7,7 @@ const user = require("./routes/user");
 const product = require("./routes/product");
 const cart = require("./routes/cart");
 const order = require("./routes/order");
-
+ 
 mongoose
 	.connect(
 		`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@shopulse-1-dozvf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
@@ -24,7 +24,7 @@ mongoose
 	.catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-	res.send("Welcome to the backend of shopulse");
+	res.send("Welcome to the backend ");
 });
 
 // Middleware

@@ -32,9 +32,13 @@ router.post("/payment", auth, (req, res) => {
 				{ idempotencyKey }
 			);
 		})
-		.then((result) => res.status(200).json({ msg: "Payment successful" }))
+		.then((result) =>
+			res.status(200).json({ errors: [{ msg: "payment successfull" }] })
+		)
 		.catch((err) =>
-			res.status(500).json({ errors: "Internal server error please try again" })
+			res
+				.status(500)
+				.json({ errors: [{ msg: "Internal server error please try again" }] })
 		);
 });
 
